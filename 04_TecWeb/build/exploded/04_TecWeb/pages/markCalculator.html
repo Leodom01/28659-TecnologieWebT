@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="-1"/>
+		<title>Calcolatore voti</title>
+		<link rel="stylesheet" href="../styles/default.css" type="text/css"/>
+        <script type="text/javascript" src="../scripts/Statistica.js"></script>
+		<script>
+            function loadVoti(){
+                for(let temp of document.markForm.marks.value.split(",")){
+                    if(temp<18 || temp>33){
+                        alert("Voti errati, compare "+temp+"! I voti deovno essere compresi fra 18 e 33!");
+                        return;
+                    }
+                }
+                var statObj = new Statistica(document.markForm.marks.value);
+                document.markForm.style.display = 'none';
+                
+                var resultDivNode = document.getElementById("resultDiv");
+                resultDivNode.appendChild(document.createTextNode("Ecco i tuoi risultati"));
+                resultDivNode.append(document.createElement("br"));
+                resultDivNode.appendChild(document.createTextNode("Ecco la lista di voti:"));
+                resultDivNode.append(document.createElement("br"));
+                resultDivNode.appendChild(document.createTextNode(statObj.getVoti()));
+                resultDivNode.append(document.createElement("br"));
+                //TODO Devo veramente mettere tutta sta barella di roba tutte le volte che devo fare br?
+                resultDivNode.append(document.createElement("br"));
+                resultDivNode.appendChild(document.createTextNode("Voto max: "+statObj.getMax()));
+                resultDivNode.append(document.createElement("br"));
+                resultDivNode.appendChild(document.createTextNode("Voto min: "+statObj.getMin()));
+                resultDivNode.append(document.createElement("br"));
+                resultDivNode.appendChild(document.createTextNode("Media: "+statObj.media()));
+                resultDivNode.append(document.createElement("br"));
+                resultDivNode.appendChild(document.createTextNode("Variabilità: "+statObj.variabilita()));
+            }
+        </script>
+	</head>
+	<body>
+		<form name="markForm">
+            <p>Inserisci i tuoi voti separati da una virgola:</p>
+			<input type="text" name="marks">
+			<input type="button" value="calcola" onClick="loadVoti();">
+            <br/>
+			<br/>
+		</form>
+        
+        <div id="resultDiv">
+            
+        </div>
+	</body>
+
+</html>
+

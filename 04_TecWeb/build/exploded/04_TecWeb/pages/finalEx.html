@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+    <title>Esercizio FInale</title>
+    <link rel="stylesheet" href="../styles/default.css" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+        function spawnTime() {
+            let currentTime = new Date();
+            $('[name=timeP]').text(currentTime.toTimeString());
+        }
+        function flipBg() {
+            if (document.body.style.backgroundColor != "pink") {
+                document.body.style.backgroundColor = "pink";
+            } else {
+                document.body.style.backgroundColor = "white";
+            }
+        }
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        function messBg() {
+            document.body.style.backgroundColor = getRandomColor();
+        }
+        function fillEventArea(){
+            for(let item of document.forms[0].elements){
+                if(item.onchange != null){
+                    $("#eventsList").append("\n"+item.type+" nome:"+item.nodeName+" onchange: "+item.onchange);
+                }
+                if(item.onclick != null){
+                    $("#eventsList").append("\n"+item.type+" nome:"+item.nodeName+" onclick: "+item.onclick);
+                }
+                if(item.ondblclick != null){
+                    $("#eventsList").append("\n"+item.type+" nome:"+item.nodeName+" ondblclick: "+item.ondblclick);
+                }
+                if(item.onfocus != null){
+                    $("#eventsList").append("\n"+item.type+" nome:"+item.nodeName+" onfocus: "+item.onfocus);
+                }
+            }
+        }
+        function updateCharCounter(currentForm){
+            $("#missingChars").text(64-currentForm.value.length);
+        }
+    </script>
+</head>
+
+<body onLoad="setInterval('spawnTime()', 1000);fillEventArea();updateCharCounter($('textarea')[1])">
+    <p name="timeP">
+    </p>
+    <form>
+        <label for="text">Metti il tuo nome:</label>
+        <input type="text" name="text" onchange="messBg();">
+        <br>
+        <label for="password">Metti pw:</label>
+        <input type="password" name="password" onchange="messBg();" onfocus="console.log('sentiamo la vaccata adesso');">
+        <br>
+        <label for="file">Seleziona un bel file:</label>
+        <input type="file" name="file" onclick="alert('Vedi di non fare casini!');">
+        <br>
+        <label for="checkbox">Cosa ti piace:</label>
+        <input type="checkbox" name="checkbox" value="pippo" ondblclick="messBg();"><label for="pippo">Pippo</label>
+        <input type="checkbox" name="checkbox" value="cocaina"><label for="cocaina">Cocaina</label>
+        <br>
+        <label for="radio">Cosa ti piace di più:</label>
+        <input type="radio" name="radio" value="cocaina_purissima">Cocaina purissima<br />
+        <input type="radio" name="radio" value="cocacola">Coca cola<br />
+        <br>
+        <label for="select_single">La tua auto preferita:</label>
+        <select name="select_single" onfocus="flipBg();">
+            <option value="Panda">Panda</option>
+            <option value="Panda">Punto</option>
+            <option value="Panda">Multipla</option>
+        </select>
+        <br>
+        <label for="select_multiple">Quali auto hai:</label>
+        <select name="select_multiple" multiple onchange="messBg();">
+            <option value="Lamborghini">Lamborghini</option>
+            <option value="Ferrari">Ferrari</option>
+            <option value="Boeing747">Boeing747</option>
+        </select>
+        <br>
+        <input type="button" value="Magic trick!" onclick="flipBg();">
+        <input type="submit" value="Send form" onclick="alert('Ecco il figo che manda');">
+        <input type="reset" value="Reset form">
+        <br>
+        <br>
+        <br>
+        <textarea readonly id="eventsList" style="border:2px solid black; font-size: x-small;">
+        </textarea>
+        <textarea maxlength="64" onmouseover="this.style.backgroundColor=getRandomColor();"
+            onmouseout="this.style.backgroundColor=getRandomColor();" onkeyup="updateCharCounter(this)"
+            deafultValue=""></textarea>
+        <p>Caratteri rimasti nella text area:</p>
+        <p id="missingChars"></p>
+    </form>
+</body>
+
+</html>
