@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="-1"/>
+	
+	<link rel="stylesheet" href="styles/default.css" type="text/css"/>
+	<script type="text/javascript" src="./lib/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="./lib/json.js"></script>
+	<script type="text/javascript" src="scripts/utils.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+	<meta charset="UTF-8">
+	
+	<title>My Title</title>
+	
+	<script type="text/javascript">
+		function localSendData(){
+			var char = document.getElementsByName("char")[0].value;
+			if((char >='A' && char<='Z') || (char >='a' && char<='a')){
+				var toSend = new Object();
+				toSend.char = char;
+				$.ajax({
+				url: './NewsFeed',
+				data: JSON.stringify(toSend),
+				type: 'post',
+				contentType: 'application/json; charset=utf-8',
+    			dataType: 'json',
+				aync: 'true',
+				success: (response) => {
+					document.getElementsByName("result")[0].innerHTML += ("<li>"+response.data+"</li>")
+					localSendData();
+				},
+				error: () => { }
+			});
+			}else{
+				alert("Inserisci solo un carattere alfabetico!");
+			}
+		}
+	</script>
+	
+</head>
+<body>
+	<form>
+		<p>Inserisci carattere con cui vuoi fetchare le news:</p>
+		<input type="text" name="char" onkeyup="localSendData();">
+	</form>
+	<ul name="result"></ul>
+</body>
+</html>

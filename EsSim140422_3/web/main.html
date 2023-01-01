@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="-1"/>
+	
+	<link rel="stylesheet" href="styles/default.css" type="text/css"/>
+	<script type="text/javascript" src="./lib/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="./lib/json.js"></script>
+	<script type="text/javascript" src="scripts/utils.js"></script>
+
+	<meta charset="UTF-8">
+	
+	<title>My Title</title>
+	
+	<script type="text/javascript">
+		const socket = new WebSocket("ws://localhost:8080/EsSim140422_3/chat");
+		socket.onmessage=function(event){
+			document.getElementsByName("result")[0].innerHTML += ("<br/>"+event.data);
+		}
+
+		function sendMessage(){
+			socket.send(document.getElementsByName("toSend")[0].value);
+		}
+	</script>
+	
+</head>
+<body>
+	<p>Scrivi qualcosa:</p>
+	<input type="text" name="toSend">
+	<button onclick="sendMessage()">Invia messaggio</button>
+	<p name="result"></p>
+</body>
+</html>

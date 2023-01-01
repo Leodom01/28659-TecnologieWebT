@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="-1"/>
+	
+	<link rel="stylesheet" href="styles/default.css" type="text/css"/>
+	<script type="text/javascript" src="./lib/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="./lib/json.js"></script>
+	<script type="text/javascript" src="scripts/utils.js"></script>
+
+	<meta charset="UTF-8">
+	
+	<style>
+		td    {height: 25px; width: 25px;}
+		input {height: 25px; width: 25px;}
+	</style>
+
+	<script>
+		function spawnCruci(){
+			var row = 0; 
+			var col = 0;
+			let table = document.createElement('table');
+			var tbdy = document.createElement('tbody');
+			while(row != 10){
+				let tr = document.createElement('tr');
+				while(col != 10){
+					let td = document.createElement("td");
+					let inputField = document.createElement("input");
+					inputField.setAttribute("type", "text");
+					inputField.setAttribute("size", "1");
+					inputField.setAttribute("name", eval(10*row+col));
+					inputField.addEventListener("change", function(){cellUpdated();});
+					td.appendChild(inputField);
+					console.log("Added "+  eval(10*row+col));
+					tr.appendChild(td);
+					col++
+				}
+				tbdy.appendChild(tr);
+				col = 0;
+				row++;
+			}
+			table.appendChild(tbdy);
+			document.getElementsByName("myForm")[0].appendChild(table);
+		}
+
+		function cellUpdated(){
+			console.log("Cella cambiata: "+event.target.name);
+			var cellVal = document.getElementsByName(event.target.name)[0].value;
+			if(cellVal >= 'A' && cellVal <= 'Z'){
+				//TODO fai submit XHR di tutto
+				document.getElementsByName("myForm")[0].submit();	
+			}else{
+				alert("Inserisci un solo valore maiuscolo eper cella!");
+			}
+			
+		}
+	</script>
+
+	<title>My Title</title>
+</head>
+
+<body onLoad="spawnCruci()">
+	<h1>Ecco il cruciverba</h1>
+	<form action="Cruci" method="post" name="myForm">
+	</form>
+</body>
+</html>
+
+
+</body>
+</html>

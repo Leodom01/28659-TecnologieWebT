@@ -1,0 +1,10 @@
+[
+    {
+        "groupName" : "pippo",
+        "groupComponent": "A, B, D"
+    },
+    {
+        "groupName" : "pluto",
+        "groupComponent": "E, F, H"
+    }
+]

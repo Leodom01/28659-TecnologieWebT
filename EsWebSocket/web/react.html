@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="-1"/>
+	
+	<link rel="stylesheet" href="styles/default.css" type="text/css"/>
+	<script type="text/javascript" src="../lib/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="../lib/json.js"></script>
+	<script type="text/javascript" src="scripts/utils.js"></script>
+	<script src="./lib/babel.min.js"></script>
+    <script src="./lib/react.production.min.js"></script>
+	<script src="./lib/react-dom.production.min.js"></script>
+	<script src="./react-components/*"></script>
+
+	<meta charset="UTF-8">
+	
+	<title>My Title</title>
+	
+	<script type="text/babel">
+		
+	</script>
+	
+</head>
+<body>
+	<form>
+		<p>Inserisci carattere di cui contare le occorrenze:</p>
+		<input type="text" name="car" onkeyup="localSendData(this, document.getElementsByName('result')[0]);">
+	</form>
+	<p name="result" style="display: none"></p>
+</body>
+</html>

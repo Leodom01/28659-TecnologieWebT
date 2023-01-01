@@ -1,0 +1,72 @@
+
+<html>
+    <head>
+        <title>CalCollab</title>
+        <link type="text/css" href="styles/default.css" rel="stylesheet"></link>
+        <meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="-1"/>
+		<script type="text/javascript" src="scripts/utils.js"></script>
+		<script type="text/javascript">
+		
+			const socket = new WebSocket("ws://localhost:8080/07_TecWeb/actionsCollab");
+			
+			socket.onmessage = function(event){
+				var data = JSON.parse(event.data);
+				console.log(data);
+				if(data.result === "invalid_operator"){
+					alert("Brutto bastardo mi hai mandato un valore operazione non valido!");
+				}else if(data.result === "session reset"){
+					document.body.innerHTML="";
+					document.body.innerHTML="<h1> Session terminata! </h1>";
+					alert("La sessione è terminata!");
+				}else{
+					myGetElementById("firstItem").value = data.firstItem;
+					myGetElementById("secondItem").value = data.secondItem;
+					myGetElementById("operand").innerHTML = data.operand;
+					myGetElementById("result").innerHTML = "="+data.result;
+				}
+			}
+			
+			function sendCompute() {
+				var toSend = new Object();
+				toSend.firstItem = myGetElementById("firstItem").value;
+				toSend.secondItem = myGetElementById("secondItem").value;
+				toSend.operator =  myGetElementById("operand").innerHTML;
+				
+				socket.send(JSON.stringify(toSend));
+			}
+
+			function checkForm() {
+				var firstItem = myGetElementById("firstItem").value;
+				var secondItem = myGetElementById("secondItem").value;
+				if (isNaN(firstItem) || isNaN(secondItem)) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+			
+		</script>
+    </head>
+    <body>
+    
+    	<form>
+    		<input type="text" id="firstItem" name="firstItem" style="display:inline" onfocusout="checkForm()?sendCompute():alert('Better check those values my friend');"/>
+    		<p id="operand" style="display:inline"></p>
+    		<input type="text" id="secondItem" name="secondItem" style="display:inline" onfocusout="checkForm()?sendCompute():alert('Better check those values my friend');"/>
+    		<p id="result" style="display:inline">=</p>
+    		<br>
+    		<input type="button" onclick="checkForm()?sendCompute():alert('Better check those values my friend');" value="compute!">
+    	</form>
+    	
+    	<br>
+    	<button name="plus" id="plus" onclick="myGetElementById('operand').innerHTML='+';checkForm()?sendCompute():alert('Better check those values my friend');">+</button>
+    	<button name="minus" id="minus" onclick="myGetElementById('operand').innerHTML='-';checkForm()?sendCompute():alert('Better check those values my friend');">-</button>
+    	<button name="mult" id="mult" onclick="myGetElementById('operand').innerHTML='*';checkForm()?sendCompute():alert('Better check those values my friend');">*</button>
+    	<button name="div" id="div" onclick="myGetElementById('operand').innerHTML='/';checkForm()?sendCompute():alert('Better check those values my friend');">/</button>
+    	
+    </body>
+
+   
+
+</html>

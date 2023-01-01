@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="-1"/>
+	
+	<link rel="stylesheet" href="styles/default.css" type="text/css"/>
+	<script src="https://unpkg.com/react@15/dist/react.js"></script>
+	<script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.js"></script>
+	<script type="text/javascript" src="scripts/utils.js"></script>
+
+	<meta charset="UTF-8">
+	
+	<title>My Title</title>
+	
+	<script type="text/javascript">
+		function mySubmit(){
+			var toSend = document.getElementsByName("fileName")[0].value;
+			$.ajax({
+				url: './TheServlet',
+				data: {
+					filename: toSend
+  				},
+				type: 'post',
+				aync: 'true',
+				success: (response) => {
+					document.getElementsByName("result")[0].innerHTML = response;
+				},
+				error: () => { }
+			});
+		}
+	</script>
+	
+</head>
+<body>
+	<form>
+		<input type="text" name="fileName" placeholder="Inserisci nome file">
+		<button onclick="mySubmit();">Invia</button>
+	</form>
+	<p name="result"></p>
+</body>
+</html>
